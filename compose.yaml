@@ -1,0 +1,34 @@
+services:
+  csv-agent:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: csv-data-analysis-agent:local
+    environment:
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      OPENAI_MODEL: ${OPENAI_MODEL:-gpt-4o-mini}
+    command:
+      - --csv
+      - /app/data/retail.csv
+      - --question
+      - ${ANALYSIS_QUESTION:-Compare revenue across categories}
+      - --session
+      - ${AGENT_SESSION_ID:-docker-demo}
+    volumes:
+      - ./data:/app/data:ro
+      - agent-memory:/app/.agent_state
+      - agent-logs:/app/logs
+    stdin_open: true
+    tty: true
+    init: true
+    read_only: true
+    tmpfs:
+      - /tmp:size=128m,mode=1777
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+
+volumes:
+  agent-memory:
+  agent-logs:

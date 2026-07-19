@@ -1,0 +1,11 @@
+.agent_state
+.env
+.git
+.gitignore
+.venv
+__pycache__
+*.py[cod]
+logs
+tests
+examples
+scripts
