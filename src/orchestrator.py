@@ -262,6 +262,3 @@ class DataAnalysisAgent:
         for handler in list(self.logger.handlers):
             handler.close()
             self.logger.removeHandler(handler)
-
-
-DataAnalysisAI = DataAnalysisAgent
